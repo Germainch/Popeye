@@ -40,7 +40,7 @@ services:
     env_file:
         - .env
     networks:
-        - worker-tier
+        - back-tier
     depends_on:
       redis:
         condition: service_healthy
@@ -54,7 +54,7 @@ services:
       - "6379:6379"
     networks:
         - poll-tier
-        - worker-tier
+        - back-tier
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -76,12 +76,12 @@ services:
         - "5432:5432"
     networks:
         - result-tier
-        - worker-tier
+        - back-tier
     restart: always
 
 networks:
   poll-tier:
   result-tier:
-  worker-tier:
+  back-tier:
 volumes:
   db-data:

@@ -11,8 +11,7 @@ RUN mvn package
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-
 # Get the jar file from the build environment
-COPY --from=BUILDER /app/target/*.jar /app/
+COPY --from=BUILDER /app/target/*.jar .
 # Run the jar file
 CMD ["java", "-jar", "worker-jar-with-dependencies.jar"]
