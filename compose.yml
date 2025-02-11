@@ -7,7 +7,7 @@ services:
       context: ./poll
       dockerfile: Dockerfile
     ports:
-      - "5000:80"
+      - "$POLL_PORT:80"
     env_file:
         - .env
     networks:
@@ -22,7 +22,7 @@ services:
       context: ./result
       dockerfile: Dockerfile
     ports:
-      - "5001:80"
+      - "$RESULT_PORT:80"
     env_file:
       - .env
     networks:
@@ -50,8 +50,10 @@ services:
 
   redis:
     image: "redis:8.0-M03-alpine"
+    env_file:
+      - .env
     ports:
-      - "6379:6379"
+      - "$REDIS_PORT:$REDIS_PORT"
     networks:
         - poll-tier
         - back-tier
@@ -73,7 +75,7 @@ services:
       interval: 5s
       timeout: 5s
     ports:
-        - "5432:5432"
+        - "$POSTGRES_PORT:$POSTGRES_PORT"
     networks:
         - result-tier
         - back-tier
